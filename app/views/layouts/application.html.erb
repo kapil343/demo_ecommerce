@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>DemoEcommerce</title>
+    <title>E-Mart</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
+    <% if notice %>
+      <p class="alert alert-primary " role="alert"><%= notice %></p>
+      <meta http-equiv="refresh" content="3;url=<%= request.original_url %>" />
+    <% elsif alert %>
+      <p class="alert alert-danger " role="alert"><%= alert %></p>
+      <meta http-equiv="refresh" content="3;url=<%= request.original_url %>" />
+    <% end %>
+    <% if user_signed_in? %>
+      Logged in as: <%= current_user.email %>
+    <% end %>
+    <%= render 'navbar/navbar' %>
     <%= yield %>
   </body>
+  
+  <%= render 'home/footer' %>
 </html>

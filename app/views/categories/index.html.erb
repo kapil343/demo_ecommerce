@@ -1,0 +1,34 @@
+<div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark" >
+  <h2 class= "text-light">Categories List</h2>
+  <div class= "text-light"><hr></div>
+  <div class="table-responsive">
+    <% if current_user and !current_user.has_role? :customer %>
+      <%= link_to('Create Category', new_category_path, class: "btn btn-warning text-wrap")%>
+    <% end %>
+    <table class="table table-sm">
+      <thead>
+        <th class="col text-dark">ID</th>
+        <th class="col text-dark">Name</th>
+        <% if current_user and current_user.has_role? :admin %>
+          <th class="col text-dark">Action</th>
+        <% end %>
+      </thead>
+      <tbody class="text-light">
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.id %></td>
+            <td><%= link_to "#{category.name}", category_products_path(category) %></td>
+            <% if current_user and current_user.has_role? :admin %>
+              <td class ="link-warning">
+                <%= link_to 'Show', category_path(category) %>
+                <%= link_to "Edit", edit_category_path(category) %>
+                <%= link_to 'Delete', category_path(category), method: :delete, data: {Confirm: "Are you sure?"} %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= link_to "Back", root_path , class: :userpath %>
+  </div>
+</div>

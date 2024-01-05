@@ -1,32 +1,19 @@
-<div class="container-flouid">
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <h3>Your Logo</h3>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Member</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Courses</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Event</a>
-          </li>
-        </ul>
-        <form class="">
-          <a class="btn btn-outline-primary mr-2" href="#">Login</a>
-          <a class="btn btn-outline-success" href="#">Become member</a>
-        </form>
-      </div>
-    </div>
-  </nav>
+<div class="container-fluid w-75 shadow mt-4 rounded border p-4 bg-dark">
+  <h2 class="text-center text-light ">Welcome To The E-Mart</h2>
+  <div class="text-center text-light ">
+    <% if user_signed_in? %>
+      <%= current_user.name %>
+      <% if current_user.has_role? :admin %>
+        <h4> You are in admin panel</h4>
+        <%= link_to "Products", products_path, class: "btn btn-warning" %>
+      <% elsif current_user.has_role? :seller %>
+        <h4> You are in seller panel</h4>
+        <%= link_to "Products", user_products_path(current_user), class: "btn btn-warning" %>
+      <% else %>
+        <h4> You are in user panel</h4>
+      <% end %>
+    <% end %>
+  </div>
 </div>
+
+<%= render 'products/index' %>

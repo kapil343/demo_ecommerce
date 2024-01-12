@@ -2,7 +2,7 @@
   <h2 class= "text-white">Products</h2>
   <div class="d-flex flex-wrap justify-content-around">
     <% @products.each do |product|%>
-      <div class="card my-3 w-25" style="width: 18rem;">
+      <div class="card my-3 w-25 mx-1" style="width: 18rem;">
         <%= image_tag product.product_image, class: "img-fluid center-image", style: "width: 150px; height: 150px;margin:0 auto;" if product.product_image.attached? %>
         <div class="card-body">
           <h5 class="card-title"><%= product.name %></h5>
@@ -11,7 +11,11 @@
           <p class="card-text text-truncate ">Description: <%= product.description %></p>
           <p class="card-text">Brand: <%= product.brand %></p>
           <% if current_user and !current_user.has_role? :seller %>
-            <%= link_to "Add to cart", user_cart_path(current_user, product_id: product.id), class:"btn btn-warning" %>
+            <%= form_with(url: cart_items_path, method: "post") do |form| %>
+              <%= form.hidden_field :product_id, value: product.id %>
+              <%= form.submit "Add to Cart", class: "btn btn-warning mb-1" %>
+            <% end %>
+            <!--<%= link_to "Add to cart", cart_items_path(product_id: product.id), method: :post, class:"btn btn-warning" %>-->
           <% end %>
           <%= link_to 'Show', product_path(product), class: "btn btn-primary" %>
         </div>
@@ -19,6 +23,7 @@
     <% end %>
   </div>
   <% if current_user and !current_user.has_role? :customer %>
-    <%= link_to "Add product", new_user_product_path(current_user), class: "btn btn-warning" %>
+    <%= link_to "Add product", new_user_product_path(current_user), class: "btn btn-warning m-2" %>
   <% end %>
+  <%= paginate @products %>
 </div>

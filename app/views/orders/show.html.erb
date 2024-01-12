@@ -1,2 +1,17 @@
-<h1>Orders#show</h1>
-<p>Find me in app/views/orders/show.html.erb</p>
+<div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
+  <%= link_to "Back", user_orders_path  %>
+  <h2 class="text-light">Order Details</h2>
+  <div class="text-center">
+    <% @order.order_items.each do |order_item| %>
+    <h5>Order ID = <%= order_item.order_id %></h5>
+      <p>Product ID = <%= order_item.product_id %></p>
+      Product name = <%= order_item.product.name %></p>
+      Product Description = <%= order_item.product.description %></p>
+      Price = <%= order_item.product.price %></p>
+    <% end %>
+    <p>Total Amount = <%= current_cart.total_amount %></p>
+    <!--
+    <%= link_to "Pay with card", payments_create_path, params: {id: @order.id},class: "btn btn-primary btn-lg", method: :post, remote: true %>
+    -->
+  </div>
+</div>

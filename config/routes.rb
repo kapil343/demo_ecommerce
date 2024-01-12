@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'order_items/index'
+  get 'cart_items/index'
    root "home#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -12,15 +14,27 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations'
   }
 
   resources :users do
     resources :products
     resources :addresses
-    resource :cart
+    resource :cart, only: [:show, :update, :destroy]
+    # resources :cart_items, only: [:index, :update, :create, :destroy]
+    resources :orders
   end
+  post 'payments/create', to: 'payments#create'
+
+
+
+  # for outside user context
   resource :cart
+  # resources :cart_items, only: [:index, :update, :create, :destroy]
+  resources :cart_items
+
+
   resources :orders
 
   resources :products

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   rolify
   after_create :assign_default_role
+  after_create :send_welcome_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -12,8 +13,18 @@ class User < ApplicationRecord
   has_many :addresses
   has_one :cart
   has_many :orders
+  has_many :addresses
+  accepts_nested_attributes_for :addresses
 
   def assign_default_role
     self.add_role(:customer) if self.roles.blank?
+  end
+
+  def ensure_cart
+    cart.presence || create_cart
+  end
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver_now
   end
 end

@@ -1,5 +1,9 @@
 <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
-  <% @product.new_record? ? <h2 class="text-light">Create Product</h2> : <h2 class="text-light">Update Product</h2>%>
+  <% if @product %>
+    <h2 class="text-light">Update Product</h2>
+  <% else %>
+    <h2 class="text-light">Create Product</h2>
+  <% end %>
   <%= form_with model: @product || [ current_user, current_user.products.build ] do |f| %>
     <div class="field mb-3 text-start">
       <%= f.label :product_image, "Product Image" %>

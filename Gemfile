@@ -34,6 +34,10 @@ gem 'pg'
 
 gem "rolify"
 
+gem "letter_opener", group: :development
+
+gem "kaminari"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

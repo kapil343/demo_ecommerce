@@ -1,0 +1,24 @@
+<div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
+  <% if address.present? %>
+    <h2 class="text-light">Update Address</h2>
+  <% else %>
+    <h2 class="text-light">Create Address</h2>
+  <% end %>
+  <%= form_with model: [current_user, current_user.addresses.build] || @address do |f| %>
+    <div class="field form-outline mb-4 text-light">
+      <%= f.label :state, class: "form-label" %><br />
+      <%= f.text_field :state, autofocus: true, autocomplete: "state", class: "form-control" %>
+    </div>
+    <div class="field form-outline mb-4 text-light">
+      <%= f.label :city, class: "form-label" %><br />
+      <%= f.text_field :city, autofocus: true, autocomplete: "city", class: "form-control" %>
+    </div>
+    <div class="field form-outline mb-4 text-light">
+      <%= f.label :pincode, class: "form-label" %><br />
+      <%= f.text_field :pincode, autofocus: true, autocomplete: "pincode", class: "form-control" %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Submit", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
+    </div>
+  <% end %>
+</div>

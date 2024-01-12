@@ -12,7 +12,12 @@
     </div>
     <div class="text-light mt-2">
       <%= f.label :address %><br>
-      <%= f.text_area :address, value: "#{current_user.addresses.last.state}, #{current_user.addresses.last.city}, #{current_user.addresses.last.pincode}", required: true %>
+      <% current_user.addresses.each do |address| %>
+        <div class="form-check">
+          <%= f.radio_button :address, "#{address.state}, #{address.city}, #{address.pincode}", class: 'form-field' %>
+          <%= f.label :address, "#{address.state}, #{address.city}, #{address.pincode}", class: 'form-field' %>
+        </div>
+      <% end %>
     </div>
     <button type="button" class="btn btn-warning mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Pay
@@ -41,4 +46,3 @@
     </div>
   <% end %>
 </div>
-

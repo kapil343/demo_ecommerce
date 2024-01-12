@@ -20,8 +20,6 @@ class OrdersController < ApplicationController
       order_date: Time.now,
       total_amount: current_order.total_amount + current_cart.total_amount,
       status: 'pending',
-      # address: "#{current_user.addresses.last.state}, #{current_user.addresses.last.city}, #{current_user.addresses.last.pincode}")
-      address: "#{last_address.state}, #{last_address.city}, #{last_address.pincode}"
     )
 
     if @order.save
@@ -59,6 +57,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:payment, :user_id)
+    params.require(:order).permit(:address, :payment, :user_id)
   end
 end

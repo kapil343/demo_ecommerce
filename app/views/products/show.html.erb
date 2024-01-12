@@ -2,7 +2,7 @@
   <% if user_signed_in? %>
   <%= link_to "Back", user_products_path(current_user)  %>
   <% else %>
-  <%= link_to "Back", products_path(current_user)  %>
+  <%= link_to "Back", root_path  %>
   <% end %>
   <div class="text-light text-center">
     <p> Title: <%= @product.name %></p>

@@ -1,2 +1,11 @@
-<h1>Addresses#index</h1>
-<p>Find me in app/views/addresses/index.html.erb</p>
+<div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
+  <% @addresses.each do |address| %>
+    <p class="text-light ">State: <%= address.state %></p>
+    <p class="text-light ">City: <%= address.city %></p>
+    <p class="text-light ">Pincode: <%= address.pincode %></p>
+    <hr class="text-light">
+      <%= link_to "Add Address", new_user_address_path(current_user, address.id), data: {turbo_method: :delete}, class: "btn btn-warning mb-2 mt-3" %>
+      <%= link_to "Edit Address", edit_user_address_path(current_user, address.id), class: "btn btn-warning mb-2 mt-3" %>
+      <%= link_to "Delete Address", user_address_path(current_user, address.id), data: {turbo_method: :delete}, class: "btn btn-warning mb-2 mt-3" %>
+  <% end %>
+</div>

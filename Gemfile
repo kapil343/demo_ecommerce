@@ -38,6 +38,8 @@ gem "letter_opener", group: :development
 
 gem "kaminari"
 
+gem 'dotenv-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 

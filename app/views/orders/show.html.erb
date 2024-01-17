@@ -1,15 +1,17 @@
 <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
-  <%= link_to "Back", user_orders_path  %>
+  <%= link_to "Back", user_orders_path(current_user)  %>
   <h2 class="text-light">Order Details</h2>
   <div class="text-center">
     <% @order.order_items.each do |order_item| %>
-    <h5>Order ID = <%= order_item.order_id %></h5>
-      <p>Product ID = <%= order_item.product_id %></p>
-      <p>Product name = <%= order_item.product.name %></p>
-      <p>Product Description = <%= order_item.product.description %></p>
-      <p>Price = <%= order_item.product.price %></p>
+      <h5 class="text-light ">Order ID : <%= order_item.order_id %></h5>
+      <p class="text-light ">Product ID : <%= order_item.product_id %></p>
+      <p class="text-light ">Product name : <%= order_item.product.name %></p>
+      <p class="text-light ">Product Description : <%= order_item.product.description %></p>
+      <p class="text-light ">Price : <%= order_item.product.price %></p>
+      <p class="text-light ">Quantity : <%= order_item.quantity %></p>
+      <hr style="color: white; ">
     <% end %>
-    <p>Total Amount = <%= current_cart.total_amount %></p>
+    <p class="text-light ">Total Amount = <%= @order.total_amount %></p>
     
     <%= link_to "Pay with card", payments_create_path, params: {id: @order.id},class: "btn btn-primary btn-lg", method: :post, remote: true %>
     

@@ -85,7 +85,7 @@ Rails.application.configure do
     port:            587,
     domain:          'E-Mart.com',
     user_name:       'kapil.patel@codiatic.com',
-    password:        'yosw hspq dcwr tyem',
+    password:        ENV['GMAIL_KEY'],
     authentication:  'plain',
     enable_starttls: true,
     open_timeout:    5,

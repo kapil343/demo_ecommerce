@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   # with the following lookup:
   #
   #   en.user_mailer.welcome_email.subject
-  #
+  
   def welcome_email user
     @greeting = "Hi"
     @user = user

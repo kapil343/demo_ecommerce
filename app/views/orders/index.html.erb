@@ -45,6 +45,7 @@
               <td ><%= order.payment %></td>
               <td class="d-flex align-items-center">
                 <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-2 ' %>
+                <%= link_to 'Download Invoice', order_path(order, format: :pdf), class: 'btn btn-primary m-2 ' %>
                 <% if current_user.has_role? :customer %>
                   <%= link_to 'Cancel Order', cancel_user_order_path(current_user, order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger btn-sm m-2' %>
                 <% end %>

@@ -1,0 +1,30 @@
+<div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
+  <h2>Order Summary</h2>
+  <p>Order Date : <%= @order.order_date %></p>
+  <p>Address : <%= @order.address %></p>
+  <p>Customer Name : <%= @order.user.name %></p>
+  <p>E-mail : <%= @order.user.email %></p>
+  <p>Payment : <%= @order.payment %></p>
+    <div>
+      <table class="table">
+        <thead>
+          <th class="th">Order ID</th>
+          <th class="th">Product</th>
+          <th class="th">Price</th>
+          <th class="th">Qunatity</th>
+        </thead>
+        <tbody>
+          <% @order.order_items.each do |order_item| %>
+            <tr>
+              <td class="td"><%= @order.id %></td>
+              <td class="td"><%= order_item.product.name %></td>
+              <td class="td"><%= order_item.product.price %></td>
+              <td class="td"><%= order_item.quantity %></td>            
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <p>Total Amount = <%= @order.total_amount %></p>
+  </div>
+</div>
+    

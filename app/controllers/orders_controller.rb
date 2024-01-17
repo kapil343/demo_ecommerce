@@ -47,6 +47,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "invoice",
+          template: 'orders/order',
+          formats: [:html],
+          layout: 'invoice',
+          disposition: 'attachment'   # Excluding ".pdf" extension.
+      end
+    end
   end
 
   def update

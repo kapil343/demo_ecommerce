@@ -81,12 +81,11 @@ class OrdersController < ApplicationController
 
   def cancel
     @order = Order.find(params[:id])
-
-    if @order.update(status: 'canceled')
-      redirect_to user_order_path(current_user, @order), notice: 'Order was successfully canceled.'
-    else
-      redirect_to user_order_path(current_user, @order), alert: 'Failed to cancel the order.'
-    end
+      if @order.update(status: 'canceled')
+        redirect_to user_order_path(current_user, @order), notice: 'Order was successfully canceled.'
+      else
+        redirect_to user_order_path(current_user, @order), alert: 'Failed to cancel the order.'
+      end
   end
 
   private

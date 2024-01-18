@@ -9,7 +9,7 @@ class CartItemsController < ApplicationController
     if !cart.nil?
       cart_item = cart.cart_items.find_by(product_id: product.id)
     end
-    if product.quantity > 0
+    if product.stock_quantity > 0
       if cart_item
         # If the product already exists, increment the quantity
         cart_item.quantity += 1

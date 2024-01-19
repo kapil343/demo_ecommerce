@@ -1,2 +1,38 @@
-<h1>Discounts#index</h1>
-<p>Find me in app/views/discounts/index.html.erb</p>
+<div class="container-fluid w-60 shadow mt-5 rounded border p-4 bg-dark m-1" >
+  <h2 class= "text-light">Discounts List</h2>
+  <div class= "text-light"><hr></div>
+   <div class="table-responsive">
+      <%= form_tag discounts_path, method: :get do %>
+        <div class="float-end input-group w-50 input-group-sm mb-4" >
+          <%= search_field_tag :search, params[:search], placeholder: "Search Here ", class:"form-control" %>
+          <%= submit_tag "search", class: "btn btn-warning"%>
+        </div>
+      <% end %>
+      <%= link_to('Add Discount', new_discount_path, class: "btn btn-warning text-wrap")%>
+      <table class="table table-sm">
+        <thead>
+          <th class="col ">ID </th>
+          <th class="col ">Percentage </th>
+          <th class="col ">Expiry Date </th>
+          <th class="col ">Product </th>
+          <th class="col ">Action</th>
+        </thead>
+        <tbody class="text-light">
+          <% @discounts.each do |discount| %>
+            <tr>
+              <td><%= discount.id %></td>
+              <td><%= discount.percentage %></td>
+              <td><%= discount.expiry_date %></td>
+              <td><%= discount.product.name %></td>
+              <td class ="link-warning">
+                <%= link_to "Edit", edit_discount_path(discount) %>
+                <%= link_to 'Delete', discount_path(discount), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= link_to "Back", root_path %> 
+    </div>
+</div>

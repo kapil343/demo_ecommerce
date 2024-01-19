@@ -40,8 +40,8 @@ Rails.application.routes.draw do
   resources :orders
   resources :products do
     resources :reviews
-    resource :discount
-  end
+      end
+resources :discounts
   resources :categories
   resources :category do
     resources :products, only: :index

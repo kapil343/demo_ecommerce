@@ -28,8 +28,7 @@ class ProductsController < ApplicationController
   end
   def edit
     if current_user.has_role? :seller
-    # @product = Product.find(params[:id])
-      @product = current_user.products.find(params[:id])
+          @product = current_user.products.find(params[:id])
     else
       @product = Product.find(params[:id])
     end

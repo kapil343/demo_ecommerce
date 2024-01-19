@@ -12,5 +12,8 @@
       <hr style="color: white; ">
     <% end %>
     <p class="text-light ">Total Amount = <%= @order.total_amount %></p>
+    <% if @order.complete? %>
+    <%= link_to "Pay with card", payments_create_path, params: {id: @order.id},class: "btn btn-primary btn-lg", method: :post, remote: true %>
+    <% end %>
   </div>
 </div>

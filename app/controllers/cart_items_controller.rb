@@ -38,7 +38,7 @@ class CartItemsController < ApplicationController
 
     # Update quantity of the cart item
     if params[:cart_item] [:change] == 'increase'
-      if @cart_item.quantity < @cart_item.product.quantity
+      if @cart_item.quantity < @cart_item.product.stock_quantity
         @cart_item.quantity += 1
       else
         redirect_to cart_path, alert: "Only #{@cart_item.product.quantity} available in stock."

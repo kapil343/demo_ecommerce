@@ -16,13 +16,12 @@ class OrdersController < ApplicationController
     @order.update(order_params)
 
     last_address = current_user.addresses.last
-    @order.update(
-      order_date: Time.now,
-      total_amount: current_order.total_amount + current_cart.total_amount,
-      status: 'pending',
-      # address: "#{current_user.addresses.last.state}, #{current_user.addresses.last.city}, #{current_user.addresses.last.pincode}")
-      address: "#{last_address.state}, #{last_address.city}, #{last_address.pincode}"
-    )
+
+      @order.update(
+        order_date: Time.now,
+        total_amount: (current_order.total_amount || 0) + current_cart.total_amount,
+        status: :pending,
+      )
 
     if @order.save
       current_cart.cart_items.each do |cart_item|
@@ -48,6 +47,25 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "invoice",
+          template: 'orders/order',
+          formats: [:html],
+          layout: 'invoice',
+          disposition: 'attachment'   # Excluding ".pdf" extension.
+      end
+    end
+  end
+
+  def update
+      @order = Order.find(params[:id])
+        if @order.update(order_params)
+          redirect_to @order, notice: 'Order status was successfully updated.'
+        else
+          render :edit
+        end
   end
 
   def destroy
@@ -56,9 +74,31 @@ class OrdersController < ApplicationController
     redirect_to root_path
   end
 
+  def bulk_update
+    Order.where(id: params[:order_ids]).update_all(status: params[:status])
+    redirect_to orders_path, notice: 'Bulk update successful.'
+  end
+
+  def cancel
+    @order = Order.find(params[:id])
+      if @order.update(status: 'canceled')
+        redirect_to user_order_path(current_user, @order), notice: 'Order was successfully canceled.'
+      else
+        redirect_to user_order_path(current_user, @order), alert: 'Failed to cancel the order.'
+      end
+  end
+
   private
 
   def order_params
-    params.require(:order).permit(:payment, :user_id)
+    params.require(:order).permit(:address, :payment, :user_id, :status)
+  end
+
+  def cancel_order
+    if @order.update(status: 'canceled')
+      redirect_to @order, notice: 'Order was successfully canceled.'
+    else
+      redirect_to @order, alert: 'Failed to cancel the order.'
+    end
   end
 end

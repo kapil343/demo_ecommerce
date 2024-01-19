@@ -1,16 +1,111 @@
-<h2 class="text-light">All Orders</h2>
-<% @orders.each do |order| %>
-  <p>ID: <%= order.id %></p>
-  <p>Name: <%= order.user.name %></p>
-  <p>Email: <%= order.user.email %></p>
-  <p>Order Address: <%= order.address %></p>
-  <p>Order Date: <%= order.order_date %></p>
-  <p>Order Status: <%= order.status %></p>
-  <p>Total Amount: <%= order.total_amount %></p>
-  <p>Order Items: </p>
-  <ul>
-    <% order.order_items.each do |order_item| %>
-    <li><%= order_item.quantity %> x <%= order_item.product.name %></li>
+<div class="container-fluid w-75 shadow mt-5 rounded border p-4 bg-dark" >
+  <h2 class= "text-light">Orders</h2>
+  <% if current_user.has_role? :customer %>
+    <div class="table-responsive  ">
+      <table class="table table-sm table-bordered">
+        <thead>
+          <th class="col ">ID</th>
+          <th class="col ">User_ID</th>
+          <th class="col ">Name</th>
+          <th class="col ">Email</th>
+          <th class="col ">Address</th>
+          <th class="col ">Order Date</th>
+          <th class="col ">Status</th>
+          <th class="col ">Payment Method</th>
+          <th class="col "> Action </th>
+        </thead>
+        <tbody>
+          <% @orders.each do |order| %>
+            <tr>
+              <td >
+                <%= order.id %>
+              </td>
+              <td ><%= order.user.id %></td>
+              <td ><%= order.user.name %></td>
+              <td ><%= order.user.email %></td>
+              <td ><%= order.address %></td>
+              <td ><%= order.order_date %></td>
+              <% if current_user.has_role? :customer %>
+                <td ><%= order.status %></td>
+              <% else %>
+                <td>
+                  <%= form_for order, url: order_path(order), method: :patch, html: { class: 'form-inline' } do |f| %>
+                    <%= f.select :status, Order.statuses.keys.map { |s| [s.humanize, s] }, class: 'form-control mr-2' %>
+                    <%= f.submit 'Change Status', class: 'btn btn-primary' %>
+                  <% end %>
+                <% end %>
+              </td>
+              <td ><%= order.payment %></td>
+              <td class="d-flex align-items-center">
+                <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-2 ' %>
+                <%= link_to 'Download Invoice', order_path(order, format: :pdf), class: 'btn btn-primary m-2 ' %>
+                <% if current_user.has_role? :customer %>
+                  <%= link_to 'Cancel Order', cancel_user_order_path(current_user, order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger btn-sm m-2' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to "Back", root_path  %>
+    </div>
+  <% else %>
+    <%= form_tag bulk_update_user_orders_path(current_user), method: :patch, class: 'mb-3' do %>
+      <div class="mb-2">
+        <%= select_tag 'status', options_for_select(Order.statuses.keys.map { |s| [s.humanize, s] }), class: 'form-control' %>
+      </div>
+      <%= submit_tag 'Update Selected Orders', class: 'btn btn-primary mb-1' %>
+      <div class="table-responsive  ">
+        <table class="table table-sm table-bordered">
+          <thead>
+            <th class="col ">ID</th>
+            <th class="col ">User_ID</th>
+            <th class="col ">Name</th>
+            <th class="col ">Email</th>
+            <th class="col ">Address</th>
+            <th class="col ">Order Date</th>
+            <th class="col ">Status</th>
+            <th class="col ">Payment Method</th>
+            <th class="col "> Action </th>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <tr>
+                <td >
+                  <%= order.id %>
+                  <label class="checkbox-inline">
+                    <%= check_box_tag 'order_ids[]', order.id %>
+                  </label>
+                </td>
+                <td ><%= order.user.id %></td>
+                <td ><%= order.user.name %></td>
+                <td ><%= order.user.email %></td>
+                <td ><%= order.address %></td>
+                <td ><%= order.order_date %></td>
+                <% if current_user.has_role? :customer %>
+                  <td ><%= order.status %></td>
+                <% else %>
+                  <td>
+                    <%= form_for order, url: order_path(order), method: :patch, html: { class: 'form-inline' } do |f| %>
+                      <%= f.select :status, Order.statuses.keys.map { |s| [s.humanize, s] }, class: 'form-control mr-2' %>
+                      <%= f.submit 'Change Status', class: 'btn btn-primary' %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td ><%= order.payment %></td>
+                <td class="d-flex align-items-center">
+                  <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-2 ' %>
+                  <%= link_to 'Download Invoice', order_path(order, format: :pdf), class: 'btn btn-primary m-2 ' %>
+                  <% if current_user.has_role? :customer %>
+                    <%= link_to 'Cancel Order', cancel_user_order_path(current_user, order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger btn-sm m-2' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= link_to "Back", root_path  %>
+      </div>
     <% end %>
-  </ul>
-<% end %>
+  <% end %>
+</div>

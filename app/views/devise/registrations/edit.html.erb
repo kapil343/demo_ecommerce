@@ -47,10 +47,14 @@
       <%= f.label :current_password, class: "form-label" %> <i>(we need your current password to confirm your changes)</i><br />
       <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
     </div>
-    <div class="actions">
-      <%= f.submit "Update", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
-      <%= link_to "Manage Addresses", user_addresses_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
-    </div>
+    <% if current_user.addresses.any? %>
+        <%= link_to "Manage Addresses", user_addresses_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
+    <% else %>
+      <div class="actions">
+      <%= link_to "Add Address", new_user_address_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
+      </div>
+    <% end %>
+    <%= f.submit "Update", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
   <% end %>
   <h3 class="text-light ">Cancel my account</h3>
   <div class="text-light ">Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: "actions mb-2 text-dark btn btn-warning mt-3 "  %></div>

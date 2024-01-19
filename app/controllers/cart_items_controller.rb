@@ -2,28 +2,33 @@ class CartItemsController < ApplicationController
   before_action :set_cart_item, only: [:update, :destroy]
   def create
     product = Product.find(params[:product_id])
-    cart = current_user.cart
+    # you can use this one also as alternative if this doesn't work cart = current_user.cart
+    cart = current_cart
 
     # Check if the product already exists in the cart
-    cart_item = cart.cart_items.find_by(product_id: product.id)
-
-    if cart_item
-      # If the product already exists, increment the quantity
-      cart_item.quantity += 1
-      # cart.total_amount += cart_item.product.price
-    else
-      # If the product doesn't exist, create a new cart item
-      cart_item = cart.cart_items.build(product: product)
+    if !cart.nil?
+      cart_item = cart.cart_items.find_by(product_id: product.id)
     end
+    if product.stock_quantity > 0
+      if cart_item
+        # If the product already exists, increment the quantity
+        cart_item.quantity += 1
+      else
+        # If the product doesn't exist, create a new cart item
+        cart_item = cart.cart_items.build(product: product)
+      end
 
-    if cart_item.save
-      cart.reload # Reload the cart to get the updated cart_items association
-      cart.total_amount = cart.cart_items.sum { |item| item.product.price * item.quantity }
-      cart.save
+      if cart_item.save
+        cart.reload # Reload the cart to get the updated cart_items association
+        cart.total_amount = cart.cart_items.sum { |item| item.product.price * item.quantity }
+        cart.save
 
-      redirect_to cart_path, notice: 'Product added to cart successfully!'
+        redirect_to cart_path, notice: 'Product added to cart successfully!'
+      else
+        redirect_to product_path(product), alert: 'Failed to add product to cart.'
+      end
     else
-      redirect_to product_path(product), alert: 'Failed to add product to cart.'
+      redirect_to product_path(product), alert: 'Product is out of stock.'
     end
   end
 
@@ -33,9 +38,17 @@ class CartItemsController < ApplicationController
 
     # Update quantity of the cart item
     if params[:cart_item] [:change] == 'increase'
-      @cart_item.quantity += 1
+      if @cart_item.quantity < @cart_item.product.stock_quantity
+        @cart_item.quantity += 1
+      else
+        redirect_to cart_path, alert: "Only #{@cart_item.product.quantity} available in stock."
+        return
+      end
     elsif params[:cart_item] [:change] == 'decrease' && @cart_item.quantity > 1
       @cart_item.quantity -= 1
+    else
+      redirect_to cart_path, alert: 'Invalid quantity change request.'
+      return
     end
 
     if @cart_item.save

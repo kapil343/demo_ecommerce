@@ -5,6 +5,16 @@
     <h2 class="text-light">Create Address</h2>
   <% end %>
   <%= form_with model: [current_user, current_user.addresses.build] || @address do |f| %>
+    <% if @address and @address.errors.any? %>
+      <div id="error_explanation">
+        <h2 class="text-light "><%= pluralize(@address.errors.count, "error") %> prohibited this address from being saved:</h2>
+        <ul>
+          <% @address.errors.full_messages.each do |msg| %>
+            <li class="text-light "><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class="field form-outline mb-4 text-light">
       <%= f.label :state, class: "form-label" %><br />
       <%= f.text_field :state, autofocus: true, autocomplete: "state", class: "form-control" %>

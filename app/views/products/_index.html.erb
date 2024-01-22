@@ -1,7 +1,7 @@
 <div class = "container-fluid w-75 shadow mt-5 rounded border p-4 bg-dark">
   <h2 class= "text-white">Products</h2>
   <div class="d-flex flex-wrap justify-content-around">
-    <% @products.each do |product|%>
+    <% products.each do |product|%>
       <div class="card my-3 w-25 mx-1" style="width: 18rem;">
         <%= image_tag product.product_image, class: "img-fluid center-image", style: "width: 150px; height: 150px;margin:0 auto;" if product.product_image.attached? %>
         <div class="card-body">
@@ -33,5 +33,5 @@
     <%= link_to "Add product", new_user_product_path(current_user), class: "btn btn-warning m-2" %>
     <%= link_to "Discounts", discounts_path, class: "btn btn-warning m-2" %>
   <% end %>
-  <%= paginate @products %>
+  <%= paginate products %>
 </div>

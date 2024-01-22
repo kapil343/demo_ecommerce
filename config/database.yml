@@ -20,6 +20,7 @@ test:
 
 production:
   <<: *default
+  url: <%= ENV["DATABASE_URL"]%>
   database: demo_ecommerce_production
   username: postgres
   password: <%= ENV["demo_ecommerce_DATABASE_PASSWORD"] %>

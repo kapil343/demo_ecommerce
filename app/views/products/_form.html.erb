@@ -1,15 +1,15 @@
 <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
-  <% if @product %>
+  <% if product %>
     <h2 class="text-light">Update Product</h2>
   <% else %>
     <h2 class="text-light">Create Product</h2>
   <% end %>
-  <%= form_with model: @product || [ current_user, current_user.products.build ] do |f| %>
-    <% if @product and @product.errors.any? %>
+  <%= form_with model: product do |f| %>
+    <% if product and product.errors.any? %>
       <div id="error_explanation">
-        <h2 class="text-light "><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
+        <h2 class="text-light "><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
         <ul>
-          <% @product.errors.full_messages.each do |msg| %>
+          <% product.errors.full_messages.each do |msg| %>
             <li class="text-light "><%= msg %></li>
           <% end %>
         </ul>
@@ -44,7 +44,7 @@
       <%= f.select :category_id, options_for_select(Category.all.map {|key| [key.name, key.id]}), class: "form-control form-select"%>
     </div>
     <div>
-      <%= f.submit @product ? !@product.new_record? ? "Update Product" : "Create Product" : "Create Product", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
+      <%= f.submit product ? !product.new_record? ? "Update Product" : "Create Product" : "Create Product", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
     </div>
   <% end %>
 </div>

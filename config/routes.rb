@@ -22,7 +22,6 @@ Rails.application.routes.draw do
     resources :products
     resources :addresses
     resource :cart, only: [:show, :update, :destroy]
-    # resources :cart_items, only: [:index, :update, :create, :destroy]
     resources :orders do
       collection do
         patch 'bulk_update'
@@ -35,16 +34,14 @@ Rails.application.routes.draw do
 
   # for outside user context
   resource :cart
-  # resources :cart_items, only: [:index, :update, :create, :destroy]
   resources :cart_items
   resources :orders
   resources :products do
     resources :reviews
-      end
-resources :discounts
+  end
+  resources :discounts
   resources :categories
   resources :category do
     resources :products, only: :index
   end
-  resources :discounts
 end

@@ -1,4 +1,4 @@
-<div class="container-fluid w-75 shadow mt-5 rounded border p-4 bg-dark" >
+<div class="container-fluid w-80 shadow mt-5 rounded border p-4 bg-dark" >
   <h2 class= "text-light">Orders</h2>
   <% if current_user.has_role? :customer %>
     <div class="table-responsive  ">
@@ -17,9 +17,7 @@
         <tbody>
           <% @orders.each do |order| %>
             <tr>
-              <td >
-                <%= order.id %>
-              </td>
+              <td ><%= order.id %></td>
               <td ><%= order.user.id %></td>
               <td ><%= order.user.name %></td>
               <td ><%= order.user.email %></td>
@@ -33,14 +31,14 @@
                     <%= f.select :status, Order.statuses.keys.map { |s| [s.humanize, s] }, class: 'form-control mr-2' %>
                     <%= f.submit 'Change Status', class: 'btn btn-primary' %>
                   <% end %>
-                <% end %>
-              </td>
+                </td>
+              <% end %>
               <td ><%= order.payment %></td>
               <td class="d-flex align-items-center">
-                <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-2 ' %>
-                <%= link_to 'Download Invoice', order_path(order, format: :pdf), class: 'btn btn-primary m-2 ' %>
+                <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-1 ' %>
+                <%= link_to 'Download Invoice', order_path(order, format: :pdf), class: 'btn btn-primary m-1 ' %>
                 <% if current_user.has_role? :customer %>
-                  <%= link_to 'Cancel Order', cancel_user_order_path(current_user, order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger btn-sm m-2' %>
+                  <%= link_to 'Cancel Order', cancel_user_order_path(current_user, order), method: :patch, data: { confirm: 'Are you sure you want to cancel this order?' }, class: 'btn btn-danger btn-sm m-1' %>
                 <% end %>
               </td>
             </tr>
@@ -90,8 +88,8 @@
                       <%= f.select :status, Order.statuses.keys.map { |s| [s.humanize, s] }, class: 'form-control mr-2' %>
                       <%= f.submit 'Change Status', class: 'btn btn-primary' %>
                     <% end %>
-                  <% end %>
-                </td>
+                  </td>
+                <% end %>
                 <td ><%= order.payment %></td>
                 <td class="d-flex align-items-center">
                   <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-2 ' %>

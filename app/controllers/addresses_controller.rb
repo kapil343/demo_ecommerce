@@ -4,8 +4,7 @@ class AddressesController < ApplicationController
     @addresses = @user.addresses
   end
   def new
-    # @user = User.find(params[:user_id])
-    # @address = @user.addresses.new
+    @address = current_user.addresses.build
   end
   def create
     @user = User.find(params[:user_id])
@@ -18,7 +17,7 @@ class AddressesController < ApplicationController
   end
   def edit
     @user = User.find(params[:user_id])
-    @address = @user.addresses.where(id: params[:id])
+    @address = @user.addresses.find_by(id: params[:id])
   end
   def update
     @user = User.find(params[:user_id])
@@ -34,17 +33,7 @@ class AddressesController < ApplicationController
     @address.destroy
     redirect_back(fallback_location: edit_user_registration_path)
   end
-  # def update
-    # @address = current_user.addresses.find(params[:id])
-    # @address.update(address: params[:address])
-    # redirect_back(fallback_location: edit_user_registration_path)
 
-  # end
-  # def destroy
-    # @address = current_user.addresses.find(params[:id])
-    # @address.current_user.update(address: nil) # Remove user's address
-    # redirect_back(fallback_location: edit_user_registration_path)
-  # end
   private
   def address_params
     params.require(:address).permit(:state, :city, :pincode, :user_id)

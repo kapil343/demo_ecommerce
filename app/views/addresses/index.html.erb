@@ -4,8 +4,8 @@
     <p class="text-light ">City: <%= address.city %></p>
     <p class="text-light ">Pincode: <%= address.pincode %></p>
     <hr class="text-light">
-      <%= link_to "Add Address", new_user_address_path(current_user, address.id), data: {turbo_method: :delete}, class: "btn btn-warning mb-2 mt-3" %>
-      <%= link_to "Edit Address", edit_user_address_path(current_user, address.id), class: "btn btn-warning mb-2 mt-3" %>
-      <%= link_to "Delete Address", user_address_path(current_user, address.id), data: {turbo_method: :delete}, class: "btn btn-warning mb-2 mt-3" %>
+    <%= link_to "Add Address", new_user_address_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
+    <%= link_to "Edit Address", edit_user_address_path(current_user, address), class: "btn btn-warning mb-2 mt-3" %>
+    <%= link_to "Delete Address", user_address_path(current_user, address.id), data: {turbo_method: :delete}, class: "btn btn-warning mb-2 mt-3" %>
   <% end %>
 </div>

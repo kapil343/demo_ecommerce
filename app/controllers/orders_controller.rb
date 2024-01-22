@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
         order_date: Time.now,
         total_amount: (current_order.total_amount || 0) + current_cart.total_amount,
         status: :pending,
+        address: "#{last_address.state}, #{last_address.city}, #{last_address.pincode}"
       )
 
     if @order.save
@@ -92,13 +93,5 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:address, :payment, :user_id, :status)
-  end
-
-  def cancel_order
-    if @order.update(status: 'canceled')
-      redirect_to @order, notice: 'Order was successfully canceled.'
-    else
-      redirect_to @order, alert: 'Failed to cancel the order.'
-    end
   end
 end

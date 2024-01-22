@@ -19,5 +19,6 @@ class ApplicationController < ActionController::Base
     return Order.create(user_id: current_user.id) if order.nil?
 
     order.status == 'complete' ? Order.create(user_id: current_user.id) : order
+    order.status == 'canceled' ? Order.create(user_id: current_user.id) : order
   end
 end

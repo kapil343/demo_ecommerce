@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    if current_user and current_user.has_role? :seller
+    if current_user&.has_role? :seller
       @products = current_user.products.page(params[:page])
     elsif params[:category_id]
       @products = Product.where(category_id: params[:category_id]).page(params[:page])

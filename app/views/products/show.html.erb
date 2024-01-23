@@ -1,8 +1,8 @@
 <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-dark">
   <% if user_signed_in? %>
-  <%= link_to "Back", user_products_path(current_user)  %>
+    <%= link_to "Back", user_products_path(current_user)  %>
   <% else %>
-  <%= link_to "Back", root_path  %>
+    <%= link_to "Back", root_path  %>
   <% end %>
   <div class="text-light text-center">
     <div>
@@ -13,7 +13,7 @@
     <p> Description: <%= @product.description %></p>
     <p> Brand: <%= @product.brand %></p>
     <p> Stock_quantity: <%= @product.stock_quantity %></p>
-    <% if current_user and !current_user.has_role? :customer %>
+    <% if !current_user&.has_role? :customer %>
       <h3>Product:<%= @product.id %></h3>
       <%= link_to "Edit", edit_user_product_path(current_user), class: "btn btn-primary" %>
       <%= link_to 'Delete', user_product_path(current_user), method: :delete, data: {Confirm: "Are you sure?"}, class: "btn btn-primary"%>

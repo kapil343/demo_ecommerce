@@ -29,7 +29,7 @@
       </div>
     <% end %>
   </div>
-  <% if current_user and !current_user.has_role? :customer %>
+  <% if (current_user and current_user&.has_role? :admin) || (current_user and current_user&.has_role? :seller) %>
     <%= link_to "Add product", new_user_product_path(current_user), class: "btn btn-warning m-2" %>
     <%= link_to "Discounts", discounts_path, class: "btn btn-warning m-2" %>
   <% end %>

@@ -8,5 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-user = User.create(email: "kapil.patel@codiatic.com", password: 123456, password_confirmation: 123456)
-user.add_role :admin
+# user = User.create(email: "kapil.patel@codiatic.com", password: 123456, password_confirmation: 123456)
+# user.add_role :admin
+user = User.create(email: "aakash.kushwah@codiatic.com", password: 123456, password_confirmation: 123456)
+user.add_role :seller

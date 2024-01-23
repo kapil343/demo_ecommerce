@@ -14,3 +14,8 @@
 # user.add_role :seller
 # category = Category.create(name: "Mobiles")
 # product = category.products.create(name: "MOTOROLA g54 5G (Pearl Blue, 128 GB)  (8 GB RAM)", price: 17999.00, description: "Stay productive and improve your performance with this resourceful smartphone that has a myriad of features to its name. With 8 GB RAM and 128 GB storage, you can seamlessly perform a multitude of tasks at ease and stack up a heap of content with the huge storage space. The 7020 octa-core MediaTek Dimensity processor delivers a power-packed performance. The 50 MP OIS camera is equipped with Quad Pixel technology and the 16 MP front camera lets you cherish your photography experience. Powered by a 6000 mAh battery supported with a 33 W charger, you can use this mobile for hours together without fearing power drop. With 14 5G bands, experience superfast network connectivity. Experience immersive entertainment with the 120 Hz with 16.6 cm FHD+ Display. Featuring a premium glass finish, stereo speakers with Dolby Atmos and Moto Spatial sound, IP52 rating, this phone lets you have an incredible experience.", brand: "MOTOROLA", stock_quantity: 40, user_id: 2)
+#
+user = User.find(email: "kapil.patel@codiatic.com")
+user.add_role :admin
+user2 = User.find(email: "aakash.kushwah@codiatic.com")
+user2.add_role :seller

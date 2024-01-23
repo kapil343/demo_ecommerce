@@ -2,7 +2,10 @@
   <h2 class= "text-light">Categories List</h2>
   <div class= "text-light"><hr></div>
   <div class="table-responsive">
-    <% if current_user and !current_user.has_role? :customer %>
+    <% if current_user and current_user.has_role? :admin %>
+      <%= link_to('Create Category', new_category_path, class: "btn btn-warning text-wrap m-1")%>
+    <% end %>
+    <% if current_user and current_user.has_role? :seller %>
       <%= link_to('Create Category', new_category_path, class: "btn btn-warning text-wrap m-1")%>
     <% end %>
     <table class="table table-sm">

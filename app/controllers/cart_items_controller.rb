@@ -20,7 +20,7 @@ class CartItemsController < ApplicationController
 
       if cart_item.save
         cart.reload # Reload the cart to get the updated cart_items association
-        cart.total_amount = cart.cart_items.sum { |item| item.product.price * item.quantity }
+        cart.total_amount = cart.cart_items.sum { |item| item.product.discounted_price(item.product) * item.quantity }
         cart.save
 
         redirect_to cart_path, notice: 'Product added to cart successfully!'
@@ -54,7 +54,7 @@ class CartItemsController < ApplicationController
     if @cart_item.save
       # Update total_amount based on the quantity change
     cart = current_user.cart
-    cart.total_amount += (@cart_item.product.price * (@cart_item.quantity - old_quantity))
+    cart.total_amount += (@cart_item.product.discounted_price(@cart_item.product) * (@cart_item.quantity - old_quantity))
     cart.save
 
       redirect_to cart_path, notice: 'Cart item quantity updated successfully!'
@@ -69,7 +69,7 @@ class CartItemsController < ApplicationController
     @cart_item.destroy
     # Update total_amount based on the deleted item
     cart = current_user.cart
-    cart.total_amount -= (@cart_item.product.price * old_quantity)
+    cart.total_amount -= (@cart_item.product.discounted_price(@cart_item.product) * old_quantity)
     cart.save
     redirect_to user_cart_path(current_cart)
   end

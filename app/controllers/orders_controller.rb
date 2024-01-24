@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
       current_cart.total_amount=0
       current_cart.save
       redirect_to user_orders_path(current_user)
+      OrderMailer.place_order_notification(@order).deliver_now
     else
       redirect_to root_path, alert: 'Failed to create order'
     end

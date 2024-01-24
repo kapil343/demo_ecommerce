@@ -1,0 +1,13 @@
+<h1>Order Placed Confirmation</h1>
+<p>Dear <%= @order.user.name %>,</p>
+<p>Your order with the following details has been successfully placed:</p>
+
+<ul>
+  <% @order.order_items.each do |item| %>
+    <li><%= item.product.name %> - <%= item.quantity %> units</li>
+  <% end %>
+</ul>
+
+<p>Total Amount: <%= @order.total_amount %></p>
+
+<p>Thank you for shopping with us!</p>

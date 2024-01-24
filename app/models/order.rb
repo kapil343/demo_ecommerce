@@ -3,5 +3,4 @@ class Order < ApplicationRecord
   has_many :order_items
   has_many :products, through: :order_items
   enum status: %i[complete pending canceled]
-
 end

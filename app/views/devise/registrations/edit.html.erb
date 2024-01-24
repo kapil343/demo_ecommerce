@@ -39,19 +39,22 @@
         <em><%= @minimum_password_length %> characters minimum</em>
       <% end %>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :password_confirmation, class: "form-label" %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :current_password, class: "form-label" %> <i>(we need your current password to confirm your changes)</i><br />
       <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
     </div>
+    
     <% if current_user.addresses.any? %>
-        <%= link_to "Manage Addresses", user_addresses_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
+      <%= link_to "Manage Addresses", user_addresses_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
     <% else %>
       <div class="actions">
-      <%= link_to "Add Address", new_user_address_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
+        <%= link_to "Add Address", new_user_address_path(current_user), class: "btn btn-warning mb-2 mt-3" %>
       </div>
     <% end %>
     <%= f.submit "Update", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>

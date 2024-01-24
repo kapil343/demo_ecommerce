@@ -1,10 +1,12 @@
 class DiscountsController < ApplicationController
   def index
-  @discounts = Discount.all.page(params[:page])
-    end
-    def new
-      @discount = Discount.new
-    end
+    @discounts = Discount.all.page(params[:page])
+  end
+
+  def new
+    @discount = Discount.new
+  end
+
     def create
       @discount = Discount.new(discount_params)
       if @discount.save

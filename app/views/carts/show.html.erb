@@ -7,7 +7,7 @@
   <% end %>
   <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-warning">
     <ul>
-      <% current_cart&.cart_items.each do |cart_item| %>
+      <% current_cart.cart_items.each do |cart_item| %>
         <h4>
           <li>
             Item: <%= cart_item.product.name %>
@@ -38,11 +38,11 @@
         </div>
       <% end %>
     </ul>
-    <h3>Total Amount: <%= current_cart&.total_amount %></h3>
-    <% if current_cart&.total_amount.zero? %>
+    <h3>Total Amount: <%= current_cart.total_amount %></h3>
+    <% if current_cart.total_amount.zero? %>
       <p>Your cart is Empty</p>
     <% else %>
-      <%= link_to "Proceed to checkout", new_user_order_path(current_user) if current_cart&.cart_items.any? %>
+      <%= link_to "Proceed to checkout", new_user_order_path(current_user) if current_cart.cart_items.any? %>
     <% end %>
   </div>
   <%= link_to "Empty cart", user_cart_path(current_user.cart.id), data: {turbo_method: :delete, confirm: "Are you sure?"}%>

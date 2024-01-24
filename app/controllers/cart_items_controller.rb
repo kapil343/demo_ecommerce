@@ -1,34 +1,38 @@
 class CartItemsController < ApplicationController
   before_action :set_cart_item, only: [:update, :destroy]
   def create
-    product = Product.find(params[:product_id])
-    # you can use this one also as alternative if this doesn't work cart = current_user.cart
-    cart = current_cart
+    if user_signed_in?
+      product = Product.find(params[:product_id])
+      # you can use this one also as alternative if this doesn't work cart = current_user.cart
+      cart = current_cart
 
-    # Check if the product already exists in the cart
-    if !cart.nil?
-      cart_item = cart.cart_items.find_by(product_id: product.id)
-    end
-    if product.stock_quantity > 0
-      if cart_item
-        # If the product already exists, increment the quantity
-        cart_item.quantity += 1
-      else
-        # If the product doesn't exist, create a new cart item
-        cart_item = cart.cart_items.build(product: product)
+      # Check if the product already exists in the cart
+      if !cart.nil?
+        cart_item = cart.cart_items.find_by(product_id: product.id)
       end
+      if product.stock_quantity > 0
+        if cart_item
+          # If the product already exists, increment the quantity
+          cart_item.quantity += 1
+        else
+          # If the product doesn't exist, create a new cart item
+          cart_item = cart.cart_items.build(product: product)
+        end
 
-      if cart_item.save
-        cart.reload # Reload the cart to get the updated cart_items association
-        cart.total_amount = cart.cart_items.sum { |item| item.product.discounted_price(item.product) * item.quantity }
-        cart.save
+        if cart_item.save
+          cart.reload # Reload the cart to get the updated cart_items association
+          cart.total_amount = cart.cart_items.sum { |item| item.product.discounted_price(item.product) * item.quantity }
+          cart.save
 
-        redirect_to cart_path, notice: 'Product added to cart successfully!'
+          redirect_to cart_path, notice: 'Product added to cart successfully!'
+        else
+          redirect_to product_path(product), alert: 'Failed to add product to cart.'
+        end
       else
-        redirect_to product_path(product), alert: 'Failed to add product to cart.'
+        redirect_to product_path(product), alert: 'Product is out of stock.'
       end
     else
-      redirect_to product_path(product), alert: 'Product is out of stock.'
+      redirect_to root_path, alert: 'Please sign in to continue'
     end
   end
 

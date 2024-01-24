@@ -6,7 +6,7 @@ class Discount < ApplicationRecord
   private
 
   def unique_discount_for_product
-    if product&.discount.present? and product&.discount > 0
+    if persisted? && product&.discount.present? && product.discount.percentage > 0
       errors.add(:product_id, 'already has a discount')
     end
   end

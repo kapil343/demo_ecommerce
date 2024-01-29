@@ -5,6 +5,7 @@ class Product < ApplicationRecord
   belongs_to :user
   belongs_to :category
   has_one :discount
+  has_many :reviews
 
   def discounted_price product
     discount = product.discount

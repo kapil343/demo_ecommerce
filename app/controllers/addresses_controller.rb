@@ -1,41 +1,52 @@
 class AddressesController < ApplicationController
+  before_action :set_address, only: [:edit, :destroy]
+  before_action :load_user_addresses, only: [:index, :new, :create, :update]
+
   def index
-    @user = User.find(params[:user_id])
-    @addresses = @user.addresses
+    @addresses = @addresses
   end
+
   def new
-    @address = current_user.addresses.build
+    @address = @addresses.build
   end
+
   def create
-    @user = User.find(params[:user_id])
-    @address = @user.addresses.new(address_params)
-    if @address.save
+    address = @addresses.new(address_params)
+    if address.save
       redirect_to user_addresses_path
     else
       render :new, status: :unprocessable_entity
     end
   end
+
   def edit
-    @user = User.find(params[:user_id])
-    @address = @user.addresses.find_by(id: params[:id])
+    @address
   end
+
   def update
-    @user = User.find(params[:user_id])
-    if @user.addresses.update(address_params)
+    if @addresses.update(address_params)
       redirect_to user_addresses_path
     else
       render :edit, status: :unprocessable_entity
     end
   end
+
   def destroy
-    @user = User.find(params[:user_id])
-    @address = @user.addresses.find(params[:id])
     @address.destroy
     redirect_back(fallback_location: edit_user_registration_path)
   end
 
   private
-  def address_params
-    params.require(:address).permit(:state, :city, :pincode, :user_id)
-  end
+
+    def address_params
+      params.require(:address).permit(:state, :city, :pincode, :user_id)
+    end
+
+    def set_address
+      @address = current_user.addresses.find_by(id: params[:id])
+    end
+
+    def load_user_addresses
+      @addresses = current_user.addresses
+    end
 end

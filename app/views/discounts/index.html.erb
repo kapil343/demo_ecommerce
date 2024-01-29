@@ -8,6 +8,7 @@
         <%= submit_tag "search", class: "btn btn-warning"%>
       </div>
     <% end %>
+
     <%= link_to('Add Discount', new_discount_path, class: "btn btn-warning text-wrap")%>
     <table class="table table-sm">
       <thead>
@@ -17,6 +18,7 @@
         <th class="col ">Product </th>
         <th class="col ">Action</th>
       </thead>
+
       <tbody class="text-light">
         <% @discounts.each do |discount| %>
           <tr>
@@ -32,7 +34,9 @@
         <% end %>
       </tbody>
     </table>
+
     <%= paginate @discounts %>
+
     <%= link_to "Back", root_path %>
   </div>
 </div>

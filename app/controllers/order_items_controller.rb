@@ -4,8 +4,8 @@ class OrderItemsController < ApplicationController
   end
 
   def create
-    @order_item = OrderItem.new(order_item_params)
-    @order_item.save
+    order_item = OrderItem.new(order_item_params)
+    order_item.save
   end
 
   private

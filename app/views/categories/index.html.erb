@@ -13,6 +13,7 @@
           <th class="col text-dark">Action</th>
         <% end %>
       </thead>
+
       <tbody class="text-light">
         <% @categories.each do |category| %>
           <tr>
@@ -29,6 +30,7 @@
         <% end %>
       </tbody>
     </table>
+    
     <%= link_to "Back", root_path , class: :userpath %>
   </div>
 </div>

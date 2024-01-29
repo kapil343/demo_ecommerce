@@ -5,23 +5,25 @@
   <% else %>
     <%= link_to "Back", root_path  %>
   <% end %>
+
   <div class="container-fluid w-50 shadow mt-5 rounded border p-4 bg-warning">
     <ul>
       <% current_cart.cart_items.each do |cart_item| %>
         <h4>
-          <li>
-            Item: <%= cart_item.product.name %>
-          </li>
+          <li>Item: <%= cart_item.product.name %></li>
         </h4>
         <div>
           Price: Rs. <%= cart_item.product.discounted_price(cart_item.product) %>
         </div>
+
         <div>
           Quantity: <%= cart_item.quantity %>
         </div>
+
         <div>
           <%= link_to "Remove item", cart_item_path(cart_item.id), data: {turbo_method: :delete, confirm: "Are you sure?"} %>
         </div>
+
         <div class="row align-items-center">
           <div class="col-auto">
             <%= form_for cart_item, url: cart_item_path(cart_item.id), method: :patch do |f| %>
@@ -29,6 +31,7 @@
               <%= f.submit '+', class: 'increase-quantity' %>
             <% end %>
           </div>
+
           <div class="col-auto">
             <%= form_for cart_item, url: cart_item_path(cart_item.id), method: :patch do |f| %>
               <%= f.hidden_field :change, value: 'decrease' %>
@@ -38,6 +41,7 @@
         </div>
       <% end %>
     </ul>
+
     <h3>Total Amount: <%= current_cart.total_amount %></h3>
     <% if current_cart.total_amount.zero? %>
       <p>Your cart is Empty</p>
@@ -45,5 +49,6 @@
       <%= link_to "Proceed to checkout", new_user_order_path(current_user) if current_cart.cart_items.any? %>
     <% end %>
   </div>
+
   <%= link_to "Empty cart", user_cart_path(current_user.cart.id), data: {turbo_method: :delete, confirm: "Are you sure?"}%>
 </div>

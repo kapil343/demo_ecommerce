@@ -6,10 +6,12 @@
       <%= f.label :name %><br>
       <%= f.text_field :name, value: current_user.name, required: true, readonly: true, autofocus: true %>
     </div>
+
     <div class="text-light mt-2">
       <%= f.label :email %><br>
       <%= f.email_field :email, value: current_user.email, readonly: true, required: true %>
     </div>
+
     <div class="text-light mt-2">
       <%= f.label :address %><br>
       <% current_user.addresses.each do |address| %>
@@ -19,6 +21,7 @@
         </div>
       <% end %>
     </div>
+
     <button type="button" class="btn btn-warning mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
       Pay
     </button>
@@ -29,6 +32,7 @@
             <h5 class="modal-title" id="exampleModalLabel">Payment Method</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
+
           <div class="modal-body">
             <div class="field">
               <%= f.radio_button :payment, "cash" %>
@@ -37,10 +41,12 @@
               <%= f.label :cash,"card" %>
             </div>
           </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             <%= button_to "Pay", payments_create_path, class: "btn btn-warning", remote: true %>
           </div>
+          
         </div>
       </div>
     </div>

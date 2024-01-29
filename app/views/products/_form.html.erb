@@ -4,6 +4,7 @@
   <% else %>
     <h2 class="text-light">Create Product</h2>
   <% end %>
+
   <%= form_with model: [current_user, product] do |f| %>
     <% if product and product.errors.any? %>
       <div id="error_explanation">
@@ -15,36 +16,45 @@
         </ul>
       </div>
     <% end %>
+
     <div class="field mb-3 text-start">
       <%= f.label :product_image, "Product Image" %>
       <%= f.file_field :product_image, class: "form-control" %>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :name, class: "form-label"%>
       <%= f.text_field :name, required: true, autofocus: true, autocomplete: "name", class: "form-control"%>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :price, class: "form-label"%>
       <%= f.text_field :price, required: true, autofocus: true, autocomplete: "price", class: "form-control"%>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :description, class: "form-label"%>
       <%= f.text_area :description, required: true, autofocus: true, autocomplete: "description", class: "form-control", rows: 5%>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :stock_quantity, class: "form-label"%>
       <%= f.number_field :stock_quantity, required: true, autofocus: true, autocomplete: "stock_quantity", class: "form-control"%>
     </div>
+
     <div class="form-outline mb-4 text-light">
       <%= f.label :brand, class: "form-label"%>
       <%= f.text_field :brand, required: true, autofocus: true, autocomplete: "brand", class: "form-control"%>
     </div>
+
     <div class="dropdown field mb-3 text-start text-light ">
       <%= f.label :select_category, "Select Category", class: "form-label" %>
       <%= f.select :category_id, options_for_select(Category.all.map {|key| [key.name, key.id]}), class: "form-control form-select"%>
     </div>
+
     <div>
       <%= f.submit product ? !product.new_record? ? "Update Product" : "Create Product" : "Create Product", class: "actions mb-2 text-dark btn btn-warning mt-3 " %>
     </div>
+    
   <% end %>
 </div>

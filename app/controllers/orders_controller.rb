@@ -1,10 +1,8 @@
 class OrdersController < ApplicationController
+  before_action :set_order,only: [:show, :update, :destroy, :cancel]
+
   def index
-    if current_user.has_role? :admin
-      @orders = Order.all.order(:created_at)
-    else
-      @orders = current_user.orders.all.order(:created_at)
-    end
+    @orders = current_user.has_role?(:admin) ? Order.all.order(:created_at).page(params[:page]) : current_user.orders.all.order(:created_at).page(params[:page])
   end
 
   def new
@@ -12,34 +10,13 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_order
-    @order.update(order_params)
-
-    last_address = current_user.addresses.last
-
-      @order.update(
-        order_date: Time.now,
-        total_amount: (current_order.total_amount || 0) + current_cart.total_amount,
-        status: :pending,
-        address: "#{last_address.state}, #{last_address.city}, #{last_address.pincode}"
-      )
+    current_order.update(order_params).save
+    @order = current_order.create_order_from_cart(current_order, current_cart, current_user)
 
     if @order.save
-      current_cart.cart_items.each do |cart_item|
-        order_item = @order.order_items.build(
-          product_id: cart_item.product_id,
-          quantity: cart_item.quantity,
-          cart_id: current_cart.id
-        )
-        order_item.save
-
-        product = Product.find(cart_item.product_id)
-        product.update(stock_quantity: product.stock_quantity - cart_item.quantity)
-
-        cart_item.destroy
-      end
-      current_cart.total_amount=0
+      current_cart.total_amount = 0
       current_cart.save
+
       redirect_to user_orders_path(current_user)
       OrderMailer.place_order_notification(@order).deliver_now
     else
@@ -48,7 +25,6 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
     respond_to do |format|
       format.html
       format.pdf do
@@ -62,16 +38,14 @@ class OrdersController < ApplicationController
   end
 
   def update
-      @order = Order.find(params[:id])
-        if @order.update(order_params)
-          redirect_to @order, notice: 'Order status was successfully updated.'
-        else
-          render :edit
-        end
+    if @order.update(order_params)
+      redirect_to @order, notice: 'Order status was successfully updated.'
+    else
+      render :edit
+    end
   end
 
   def destroy
-    @order = Order.find(params[:id])
     @order.destroy
     redirect_to root_path
   end
@@ -82,17 +56,24 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    @order = Order.find(params[:id])
+    if @order.status=='complete'
+      redirect_to user_orders_path, alert: 'you cannot cancel the order'
+    else
       if @order.update(status: 'canceled')
-        redirect_to user_order_path(current_user, @order), notice: 'Order was successfully canceled.'
+      redirect_to user_order_path(current_user, @order), notice: 'Order was successfully canceled.'
       else
         redirect_to user_order_path(current_user, @order), alert: 'Failed to cancel the order.'
       end
+    end
   end
 
   private
 
   def order_params
     params.require(:order).permit(:address, :payment, :user_id, :status)
+  end
+
+  def set_order
+    @order = Order.find_by(id: params[:id])
   end
 end

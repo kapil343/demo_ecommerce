@@ -14,6 +14,7 @@
           <th class="col ">Payment Method</th>
           <th class="col "> Action </th>
         </thead>
+
         <tbody>
           <% @orders.each do |order| %>
             <tr>
@@ -32,7 +33,7 @@
                     <%= f.submit 'Change Status', class: 'btn btn-primary' %>
                   <% end %>
                 </td>
-              <% end %>
+              <% end %>              
               <td ><%= order.payment %></td>
               <td class="d-flex align-items-center">
                 <%= link_to 'Show Order', order_path(order), class: 'btn btn-primary mr-1 ' %>
@@ -45,13 +46,16 @@
           <% end %>
         </tbody>
       </table>
+
       <%= link_to "Back", root_path  %>
     </div>
+
   <% else %>
     <%= form_tag bulk_update_user_orders_path(current_user), method: :patch, class: 'mb-3' do %>
       <div class="mb-2">
         <%= select_tag 'status', options_for_select(Order.statuses.keys.map { |s| [s.humanize, s] }), class: 'form-control' %>
       </div>
+
       <%= submit_tag 'Update Selected Orders', class: 'btn btn-primary mb-1' %>
       <div class="table-responsive  ">
         <table class="table table-sm table-bordered">
@@ -66,6 +70,7 @@
             <th class="col ">Payment Method</th>
             <th class="col "> Action </th>
           </thead>
+
           <tbody>
             <% @orders.each do |order| %>
               <tr>
@@ -102,8 +107,12 @@
             <% end %>
           </tbody>
         </table>
+
         <%= link_to "Back", root_path  %>
       </div>
     <% end %>
   <% end %>
+
+  <%= paginate @orders %>
+
 </div>

@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <div class="mt-4">
+    <h4 class="text-light">Leave a Review:</h4>
+    <%= form_with model: [@product, review] do |form| %>
+      <div class="form-group">
+        <%= form.label :rating, "Rating" %>
+        <%= form.number_field :rating, class: "form-control", min: 1, max: 5, required: true %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :comment, "Add a Comment" %>
+        <%= form.text_area :comment, class: "form-control", rows: 3, required: true %>
+      </div>
+
+      <%= form.submit "Submit Review", class: "btn btn-primary m-2" %>
+    <% end %>
+  </div>
+<% end %>

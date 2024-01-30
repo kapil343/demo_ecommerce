@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'reviews/index'
   get 'order_items/index'
   get 'cart_items/index'
    root "home#index"

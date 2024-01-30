@@ -4,7 +4,7 @@
   <% else %>
     <%= link_to "Back", root_path  %>
   <% end %>
-  
+
   <div class="text-light text-center">
     <div>
       <%= image_tag @product.product_image, class: "img-fluid center-image", style: "width: 150px; height: 150px;margin:0 auto;" if @product.product_image.attached? %>
@@ -16,11 +16,37 @@
     <p> Brand: <%= @product.brand %></p>
     <p> Stock_quantity: <%= @product.stock_quantity %></p>
 
-    <% if !current_user&.has_role? :customer %>
-      <h3>Product:<%= @product.id %></h3>
-      <%= link_to "Edit", edit_user_product_path(current_user, @product), class: "btn btn-primary" %>
-      <%= link_to 'Delete', user_product_path(current_user, @product), method: :delete, data: {Confirm: "Are you sure?"}, class: "btn btn-primary"%>
+    <% if (current_user&.has_role? :admin) || (current_user&.has_role? :customer) %>
+      <%= render 'reviews/form', review: @product.reviews.build %>
     <% end %>
 
+    <% if @product.reviews.present? %>
+      <div class="mt-4">
+        <h4 class="text-light">Product Reviews:</h4>
+        <ul class="list-group">
+          <% @product.reviews.each do |review| %>
+            <% if review.present? && review.rating.present? && review.comment.present? %>
+              <li class="list-group-item">
+                <strong><%= review.user&.name %></strong><br>
+                <p>Rating: <%= review.rating %>
+                  <p>Commented : <%= review.comment %></p>
+                  <% if user_signed_in? && current_user == review.user %>
+                    <%= link_to 'Edit', edit_product_review_path(@product, review), class: 'btn btn-primary' %>
+                    <%= link_to 'Delete', product_review_path(@product, review), remote: true, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-primary' %>
+                  <% end %>
+                </li>
+                <hr>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <% if !current_user&.has_role? :customer %>
+        <h3>Product:<%= @product.id %></h3>
+        <%= link_to "Edit", edit_user_product_path(current_user, @product), class: "btn btn-primary" %>
+        <%= link_to 'Delete', user_product_path(current_user, @product), method: :delete, data: {Confirm: "Are you sure?"}, class: "btn btn-primary"%>
+      <% end %>
+
+    </div>
   </div>
-</div>

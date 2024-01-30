@@ -10,11 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< Updated upstream
-ActiveRecord::Schema[7.1].define(version: 2024_01_15_094934) do
-=======
-ActiveRecord::Schema[7.1].define(version: 2024_01_29_125814) do
->>>>>>> Stashed changes
+ActiveRecord::Schema[7.1].define(version: 2024_01_29_064402) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +124,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_125814) do
     t.index ["user_id"], name: "index_products_on_user_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.integer "rating"
+    t.text "comment"
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_reviews_on_product_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
@@ -181,11 +189,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_125814) do
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "users"
-<<<<<<< Updated upstream
-=======
+
   add_foreign_key "reviews", "products"
   add_foreign_key "reviews", "users"
-  add_foreign_key "wishlists", "products"
-  add_foreign_key "wishlists", "users"
->>>>>>> Stashed changes
 end

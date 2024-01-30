@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< Updated upstream
 ActiveRecord::Schema[7.1].define(version: 2024_01_15_094934) do
+=======
+ActiveRecord::Schema[7.1].define(version: 2024_01_29_125814) do
+>>>>>>> Stashed changes
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -155,6 +159,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_094934) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "wishlists", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_wishlists_on_product_id"
+    t.index ["user_id"], name: "index_wishlists_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "users"
@@ -168,4 +181,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_15_094934) do
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "users"
+<<<<<<< Updated upstream
+=======
+  add_foreign_key "reviews", "products"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "wishlists", "products"
+  add_foreign_key "wishlists", "users"
+>>>>>>> Stashed changes
 end

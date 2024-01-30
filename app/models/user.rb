@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_one :cart
   has_many :orders
   has_many :addresses
+  has_many :wishlists, dependent: :destroy
   accepts_nested_attributes_for :addresses
 
   def assign_default_role

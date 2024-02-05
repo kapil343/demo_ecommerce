@@ -15,6 +15,7 @@
     <p> Description: <%= @product.description %></p>
     <p> Brand: <%= @product.brand %></p>
     <p> Stock_quantity: <%= @product.stock_quantity %></p>
+    <p> seller: <%= @product.user.name %></p>
 
     <% if (current_user&.has_role? :admin) || (current_user&.has_role? :customer) %>
       <%= render 'reviews/form', review: @product.reviews.build %>

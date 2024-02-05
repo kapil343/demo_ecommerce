@@ -1,14 +1,18 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:new, :create]
+  # before_action :authenticate_member!
 
   def index
     @products = if current_user&.has_role?(:seller)
-                  current_user.products.page(params[:page])
+                  @q = current_user.products.ransack(params[:q])
+                  @q.result(distinct: true).page(params[:page])
                 elsif params[:category_id]
-                  Product.where(category_id: params[:category_id]).page(params[:page])
+                  @q = Product.where(category_id: params[:category_id]).ransack(params[:q])
+                  @q.result(distinct: true).page(params[:page])
                 else
-                  Product.all.page(params[:page])
+                  @q = Product.ransack(params[:q])
+                  @q.result(distinct: true).page(params[:page])
                 end
   end
 

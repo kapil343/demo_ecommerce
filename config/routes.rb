@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'reviews/index'
   get 'order_items/index'
   get 'cart_items/index'
-   root "home#index"
+  root "products#index"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

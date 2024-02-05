@@ -15,4 +15,8 @@ class Product < ApplicationRecord
         product.price
       end
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["brand", "category_id", "created_at", "description", "id", "id_value", "name", "price", "stock_quantity", "updated_at", "user_id"]
+  end
 end

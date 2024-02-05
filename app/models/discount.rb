@@ -10,4 +10,5 @@ class Discount < ApplicationRecord
       errors.add(:product_id, 'already has a discount')
     end
   end
+
 end

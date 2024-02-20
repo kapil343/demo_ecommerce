@@ -14,6 +14,11 @@ class ProductsController < ApplicationController
                   @q = Product.ransack(params[:q])
                   @q.result(distinct: true).page(params[:page])
                 end
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data Product.to_csv, filename: "products.csv"}
+    end
   end
 
   def new
@@ -23,7 +28,8 @@ class ProductsController < ApplicationController
   def create
     product = @user.products.new(product_params)
     if product.save
-      redirect_to products_path
+      # redirect_to products_path
+      redirect_to product
     else
       render :new
     end
@@ -39,7 +45,8 @@ class ProductsController < ApplicationController
   def update
     ensure_authorized_seller
     if @product.update(product_params)
-      redirect_to product_path(@product)
+      # redirect_to product_path(@product)
+      redirect_to @product
     else
       render :edit
     end
@@ -49,6 +56,14 @@ class ProductsController < ApplicationController
     ensure_authorized_seller
     @product.destroy
     redirect_to products_path
+  end
+
+  def import
+    if Product.import(params[:file])
+      redirect_to root_url, notice: "Products imported successfully"
+    else
+      redirect_to root_url, alert: "Error importing products"
+    end
   end
 
   private

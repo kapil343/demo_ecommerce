@@ -1,17 +1,13 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
-  get 'reviews/index'
-  get 'order_items/index'
-  get 'cart_items/index'
+  authenticate :user, lambda { |u| u.has_role? :admin } do
+    mount Sidekiq::Web =>'/sidekiq'
+  end
+
   root "products#index"
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -29,6 +25,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
   get 'users/:user_id/orders/:id/cancel', to: 'orders#cancel', as: 'cancel_user_order'
 
   post 'payments/create', to: 'payments#create'
@@ -39,6 +36,7 @@ Rails.application.routes.draw do
   resources :orders
   resources :products do
     resources :reviews
+    collection { post :import }
   end
   resources :discounts
   resources :categories

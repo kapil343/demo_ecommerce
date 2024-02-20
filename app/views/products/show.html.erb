@@ -45,8 +45,8 @@
 
       <% if !current_user&.has_role? :customer %>
         <h3>Product:<%= @product.id %></h3>
-        <%= link_to "Edit", edit_user_product_path(current_user, @product), class: "btn btn-primary" %>
-        <%= link_to 'Delete', user_product_path(current_user, @product), method: :delete, data: {Confirm: "Are you sure?"}, class: "btn btn-primary"%>
+        <%= link_to "Edit", edit_user_product_path(current_user, @product), class: "btn btn-warning" %>
+        <%= link_to 'Delete', user_product_path(current_user, @product), method: :delete, data: {Confirm: "Are you sure?"}, class: "btn btn-warning"%>
       <% end %>
 
     </div>

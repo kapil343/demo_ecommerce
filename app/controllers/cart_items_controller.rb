@@ -54,9 +54,9 @@ class CartItemsController < ApplicationController
         cart_item = cart.cart_items.find_by(product_id: product.id)
       end
       if product.stock_quantity > 0
-          if cart_item
-          # If the product already exists, increment the quantity
-          cart_item.quantity += 1
+        if cart_item
+        # If the product already exists, increment the quantity
+        cart_item.quantity += 1
         else
           # If the product doesn't exist, create a new cart item
           cart_item = cart.cart_items.build(product: product)

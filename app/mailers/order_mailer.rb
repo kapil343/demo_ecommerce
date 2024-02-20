@@ -4,7 +4,7 @@ class OrderMailer < ApplicationMailer
   # with the following lookup:
   #
   #   en.order_mailer.place_order_notification.subject
-  #
+  
   def place_order_notification order
     @order = order
     pdf_data = render_to_string(

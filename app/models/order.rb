@@ -6,14 +6,14 @@ class Order < ApplicationRecord
   has_many :products, through: :order_items
   enum status: %i[complete pending canceled]
 
+  validates :order_date, :status, :total_amount, :user_id, presence: true, on: :update
+
   def create_order_from_cart(order, cart, user)
-    last_address = user.addresses.last
 
     order.update(
       order_date: Time.now,
       total_amount: (order.total_amount || 0) + cart.total_amount,
       status: :pending,
-      address: "#{last_address.state}, #{last_address.city}, #{last_address.pincode}"
     )
 
     cart.cart_items.each do |cart_item|

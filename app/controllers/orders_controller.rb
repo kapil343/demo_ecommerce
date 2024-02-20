@@ -10,7 +10,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    current_order.update(order_params).save
+    byebug
+    current_order.update(order_params)
+    byebug
+    # @order = current_order.create_order_from_cart(current_order, current_cart, current_user, order_params)
     @order = current_order.create_order_from_cart(current_order, current_cart, current_user)
 
     if @order.save

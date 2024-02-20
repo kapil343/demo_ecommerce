@@ -84,24 +84,15 @@
   <% if (current_user&.has_role? :admin) || (current_user&.has_role? :seller) %>
     <%= link_to "Add product", new_user_product_path(current_user), class: "btn btn-warning m-2" %>
     <%= link_to "Discounts", discounts_path, class: "btn btn-warning m-2" %>
+    <%= link_to "Export Products", products_path(format: 'csv'), class: "btn btn-warning m-2" %>
+    <div class="p-2">
+      <%= form_tag import_products_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import" %>
+      <% end %>
+    </div>
   <% end %>
 
   <%= paginate @products %>
-
-</div>
-
-
-
-<div class="d-flex" id="wrapper">
-
-  <!-- Sidebar -->
-  <div class="bg-light border-right" id="sidebar-wrapper">
-    <div class="sidebar-heading">Your Sidebar</div>
-    <div class="list-group list-group-flush">
-      <a href="#" class="list-group-item list-group-item-action">Home</a>
-      <a href="#" class="list-group-item list-group-item-action">About</a>
-      <a href="#" class="list-group-item list-group-item-action">Contact</a>
-    </div>
-  </div>
 
 </div>

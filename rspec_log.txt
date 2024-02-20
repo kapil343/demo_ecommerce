@@ -1,0 +1,131 @@
+.......FF.....FFFFF.F....................................................F.......................
+
+Failures:
+
+  1) ProductsController POST #create with valid params creates a new product
+     Failure/Error:
+       expect {
+         post :create, params: { product: attributes_for(:product) }
+       }.to change(Product, :count).by(1)
+
+       expected `Product.count` to have changed by 1, but was changed by 0
+     # ./spec/controllers/products_controller_spec.rb:152:in `block (4 levels) in <top (required)>'
+
+  2) ProductsController POST #create with valid params redirects to products path
+     Failure/Error: expect(response).to redirect_to(products_path)
+
+       Expected response to be a <3XX: redirect>, but was a <200: OK>
+       Response body: 
+     # ./spec/controllers/products_controller_spec.rb:159:in `block (4 levels) in <top (required)>'
+
+  3) ProductsController GET #edit renders the edit template
+     Failure/Error: expect(response).to render_template(:edit)
+       expecting <"edit"> but rendering with <[]>
+     # ./spec/controllers/products_controller_spec.rb:197:in `block (3 levels) in <top (required)>'
+
+  4) ProductsController PUT #update with valid params updates the requested product
+     Failure/Error: redirect_to product_path(@product)
+
+     AbstractController::DoubleRenderError:
+       Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".
+     # ./app/controllers/products_controller.rb:47:in `update'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/rendering.rb:23:in `with_renderer'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/template_assertions.rb:62:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `block in process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `catch'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `_catch_warden'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/integration.rb:16:in `block (2 levels) in <module:Integration>'
+     # ./spec/controllers/products_controller_spec.rb:206:in `block (4 levels) in <top (required)>'
+
+  5) ProductsController PUT #update with valid params redirects to the product
+     Failure/Error: redirect_to product_path(@product)
+
+     AbstractController::DoubleRenderError:
+       Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".
+     # ./app/controllers/products_controller.rb:47:in `update'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/rendering.rb:23:in `with_renderer'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/template_assertions.rb:62:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `block in process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `catch'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `_catch_warden'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/integration.rb:16:in `block (2 levels) in <module:Integration>'
+     # ./spec/controllers/products_controller_spec.rb:212:in `block (4 levels) in <top (required)>'
+
+  6) ProductsController PUT #update with invalid params does not update the product
+     Failure/Error: render :edit
+
+     AbstractController::DoubleRenderError:
+       Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/wicked_pdf-2.7.0/lib/wicked_pdf/pdf_helper.rb:18:in `render'
+     # ./app/controllers/products_controller.rb:49:in `update'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/rendering.rb:23:in `with_renderer'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/template_assertions.rb:62:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `block in process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `catch'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `_catch_warden'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/integration.rb:16:in `block (2 levels) in <module:Integration>'
+     # ./spec/controllers/products_controller_spec.rb:219:in `block (4 levels) in <top (required)>'
+
+  7) ProductsController PUT #update with invalid params renders the edit template
+     Failure/Error: render :edit
+
+     AbstractController::DoubleRenderError:
+       Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/wicked_pdf-2.7.0/lib/wicked_pdf/pdf_helper.rb:18:in `render'
+     # ./app/controllers/products_controller.rb:49:in `update'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/rendering.rb:23:in `with_renderer'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/template_assertions.rb:62:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `block in process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `catch'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `_catch_warden'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/integration.rb:16:in `block (2 levels) in <module:Integration>'
+     # ./spec/controllers/products_controller_spec.rb:225:in `block (4 levels) in <top (required)>'
+
+  8) ProductsController DELETE #destroy redirects to the products list
+     Failure/Error: redirect_to products_path
+
+     AbstractController::DoubleRenderError:
+       Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...); return".
+     # ./app/controllers/products_controller.rb:56:in `destroy'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/rendering.rb:23:in `with_renderer'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/actiontext-7.1.2/lib/action_text/engine.rb:69:in `block (4 levels) in <class:Engine>'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/template_assertions.rb:62:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `block in process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `catch'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:104:in `_catch_warden'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/devise-4.9.3/lib/devise/test/controller_helpers.rb:35:in `process'
+     # /home/developer/.rvm/gems/ruby-3.2.2/gems/rails-controller-testing-1.0.5/lib/rails/controller/testing/integration.rb:16:in `block (2 levels) in <module:Integration>'
+     # ./spec/controllers/products_controller_spec.rb:240:in `block (3 levels) in <top (required)>'
+
+  9) Product discounted_price returns the discounted price if discount is available
+     Failure/Error: expect(product.discounted_price(product)).to eq(90)
+
+       expected: 90
+            got: 100.0
+
+       (compared using ==)
+     # ./spec/models/product_spec.rb:27:in `block (3 levels) in <main>'
+
+Finished in 1.69 seconds (files took 1.56 seconds to load)
+97 examples, 9 failures
+
+Failed examples:
+
+rspec ./spec/controllers/products_controller_spec.rb:151 # ProductsController POST #create with valid params creates a new product
+rspec ./spec/controllers/products_controller_spec.rb:157 # ProductsController POST #create with valid params redirects to products path
+rspec ./spec/controllers/products_controller_spec.rb:195 # ProductsController GET #edit renders the edit template
+rspec ./spec/controllers/products_controller_spec.rb:205 # ProductsController PUT #update with valid params updates the requested product
+rspec ./spec/controllers/products_controller_spec.rb:211 # ProductsController PUT #update with valid params redirects to the product
+rspec ./spec/controllers/products_controller_spec.rb:218 # ProductsController PUT #update with invalid params does not update the product
+rspec ./spec/controllers/products_controller_spec.rb:224 # ProductsController PUT #update with invalid params renders the edit template
+rspec ./spec/controllers/products_controller_spec.rb:239 # ProductsController DELETE #destroy redirects to the products list
+rspec ./spec/models/product_spec.rb:24 # Product discounted_price returns the discounted price if discount is available
+
